@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Survey Questions</title>
+  <!-- Latest compiled and minified CSS & JS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+  <div class="container">
+    <div class="jumbotron">
+      <h1> Survey Questions </h1>
+      <h3>About You</h3>
+    </div>
+
+
+    <div class="row">
+
+      <div class="col-12">
+
+        <div class="card">
+          <div class="card-header">
+            <h3><strong>Question</strong></h3>
+          </div>
+          <div class="card-body">
+  
+            <form method="POST" role="form">
+
+              <div class="form-group">
+                
+  
+                <label for="name">Name (Required)</label>
+                <input type="text" class="form-control" id="name">
+              </div>
+              <div class="form-group">
+                <label for="role">Link to Photo Image (Required) </label>
+                <input type="text" class="form-control" id="pic">
+              </div>
+              <div class="for">
+                    
+                </div>
+                  
+            </form>
+            
+            <br>
+            <div class="text-right">
+              <button type="submit" class="btn btn-primary btn-md" id="add-btn"><span class="fa fa-fire"></span> Add to the Force</button>
+            </div>
+
+
+            
+          </div>
+
+
+        
+        </div>
+
+        <div id="container">
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <script type="text/javascript"> 
+    var  questionObj = [
+        { "name":"Your mind is always buzzing with unexplored ideas and plans." } ,
+        { "name" : "Generally speaking, you rely more on your experience than your imagination." },
+        { "name": "You find it easy to stay relaxed and focused even when there is some pressure." },
+        { "name" : "You rarely do something just out of sheer curiosity" },
+        { "name" : "In a discussion, truth should be more important than people’s sensitivities.." },
+        { "name" : "You rarely get carried away by fantasies and ideas." },
+        { "name" : "You think that everyone’s views should be respected regardless of whether they are supported by facts or not." },
+        { "name" : "You feel more energetic after spending time with a group of people." },
+        { "name" : "Rate this app" },
+        { "name" : "It is often difficult for you to relate to other people’s feelings." 
+    }];
+
+           questionObj.forEach(function(val,id,array){
+              console.log(val.name) ; 
+              console.log(id) ;
+              var questiontext = "<label for='name'>"+val.name+"</label><br>" ; 
+              var select = $('<select name="'+id+'" id="'+id+'" required></select></br> </br>');
+              select.addClass('form-control','')
+                var notOption = $('<option selected disabled >Select Option</option>'); 
+                select.append(notOption);
+              for(var i = 1 ; i <= 5 ; i++){
+                var option = $('<option >'+i+'</option>');
+                        select.append(option);
+                        }
+                       
+                        $(".for").append(questiontext);   
+                        
+                        $(".for").append(select);                      
+                });
+    
+    
+
+    // Question: What does this code do?
+
+
+    
+    console.log('been');    
+    $("#add-btn").on("click", function(event) {
+       var q1 = $("#0").val();
+        var q2 = $("#1").val();
+        var q3 = $("#2").val();
+        var q4 = $("#3").val();
+        var q5 = $("#4").val();
+        var q6 = $("#5").val();
+        var q7 = $("#6").val();
+        var q8 = $("#7").val();
+        var q9 = $("#8").val();
+        var q10 = $("#9").val();
+     //q2 != "" && q5cc
+      if($("#name").val().trim() !== ""  && q1 !=="" && q2 !=="" && q3 !=="" && q4 !=="" && q5 !=="" ){
+
+        event.preventDefault();
+       
+        var newCharacter = {
+        name: $("#name").val().trim(),
+        photo : $("#pic").val().trim(),
+        answers : [q1,q2,q3,q4,q5,q6,q7,q8,q9,q10]
+      };
+
+     
+
+      // Question: What does this code do??
+      $.post("/api/characters", newCharacter)
+          .then(function(data) {
+          
+           console.log("add.html", data);
+          alert(" You got much friends..."+ data.matchName + " -------------"  + data.matchImage);
+          
+                              });
+      }else{
+
+        alert("Inpud Valid Data Please...");
+      }
+    });
+  </script>
+
+</body>
+</html>
